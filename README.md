@@ -10,7 +10,7 @@ Used to update docker containers.  Run this via Task Scheduler on the cadence yo
  
 ## docker-compose.yml
  
-This compose will create container for Grafana, Influxdb, and HomeBridge.   Update the ENV variables for your setp..
+This compose will create container for Grafana, Influxdb, and HomeBridge.   Update the ENV variables for your setup.
  
 
 ## start_docker_shim.sh
@@ -19,4 +19,3 @@ This will startup the network shim when the Synology reboots.  Run this via Task
  
  
 		bash /volume1/bin/start_docker_shim.sh
-x
