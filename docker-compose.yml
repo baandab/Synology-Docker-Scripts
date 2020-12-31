@@ -1,0 +1,64 @@
+version: '3.3'
+services:
+    influxd:
+        container_name: influxdb
+        volumes:
+            - /volume1/docker/influxdb:/var/lib/influxdb:rw
+        ports:
+            - '8086:8086'
+        networks:
+            macvlan1:
+                ipv4_address: 192.168.0.40
+        restart: 'unless-stopped'
+        expose:
+            - 8086/tcp
+        environment:
+            - INFLUXDB_WRITE_USER_PASSWORD=<PASSWORD>
+            - INFLUXDB_WRITE_USER=<USERID>
+            - INFLUXDB_DB=<DB>
+            - INFLUXDB_ADMIN_PASSWORD=<PASSWORD>
+            - INFLUXDB_ADMIN_USER=<USERID>            
+        image: 'influxdb:latest'
+    grafana:
+        container_name: grafana
+        volumes:
+            - /volume1/docker/grafana:/var/lib/grafana:rw
+        ports:
+            - '2200:22'
+            - '3000:3000'
+        links:
+            - 'influxd'
+        networks:
+            macvlan1:
+                ipv4_address: 192.168.0.41
+        restart: 'unless-stopped'
+        environment:
+            - GF_SERVER_PROTOCOL=https
+            - GF_SERVER_CERT_FILE=/var/lib/grafana/ssl/grafana.crt
+            - GF_SERVER_CERT_KEY=/var/lib/grafana/ssl/grafana.key
+            - GF_USERS_ALLOW_SIGN_UP=false
+        image: 'grafana/grafana:latest'
+    homebridge:
+        container_name: oznu-homebridge
+        volumes:
+            - /volume1/docker/homebridge:/homebridge:rw
+        networks:
+            macvlan1:
+                ipv4_address: 192.168.0.42
+        restart: 'unless-stopped'
+        environment:
+            - QEMU_ARCH=x86_64
+            - S6_KEEP_ENV=1
+            - HOMEBRIDGE_CONFIG_UI=1
+            - HOMEBRIDGE_CONFIG_UI_PORT=54159
+            - ENABLE_AVAHI=0
+            - HOMEBRIDGE_INSECURE=1
+            - PACKAGES=ffmpeg
+            - PUID=1026
+            - PGID=100
+            - TZ=America/Los_Angeles
+            - DSM_HOSTNAME=<HOSTNAME>
+        image: 'oznu/homebridge:latest'
+networks:
+    macvlan1:
+        external: true
