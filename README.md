@@ -19,3 +19,12 @@ This will startup the network shim when the Synology reboots.  Run this via Task
  
  
 		bash /volume1/bin/start_docker_shim.sh
+		
+		
+##. bash_container.sh
+
+Pass this script the name of a container to start a bash shell to it
+
+		./bash_container.sh influx
+		./bash_container.sh homebridege
+		./bash_container.sh grafana
