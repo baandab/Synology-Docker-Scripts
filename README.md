@@ -25,6 +25,6 @@ This will startup the network shim when the Synology reboots.  Run this via Task
 
 Pass this script the name of a container to start a bash shell to it:
 
-		./bash_container.sh influx
-		./bash_container.sh homebridege
 		./bash_container.sh grafana
+		./bash_container.sh influx
+		./bash_container.sh homebridge
