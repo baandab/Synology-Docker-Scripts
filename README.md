@@ -27,4 +27,4 @@ Pass this script the name of a container to start a shell to it:
 
 		./shell_container.sh grafana			# to start a sh shell	
 		./shell_container.sh grafana zsh		# to start a zsh shell
-		./shell_container.sh grafana shell		# to start a shell shell
+		./shell_container.sh grafana bash		# to start a bash shell
