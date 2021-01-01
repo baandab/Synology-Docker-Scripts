@@ -35,6 +35,7 @@ echo "Creating macvlan1 and network shim..."
 # 192.168.0.40/29 is a range 192.168.0.40 to 192.168.0.48
 # 192.168.0.0/24 is a range 192.168.0.40 to 192.168.0.255
 #  
+# change eth0 to ovs_eth0 if you have Synology Virtual Machine manager installed - thanks aurrak!
   
 # create shim 
 /sbin/ip link add mynet-shim link eth0 type macvlan  mode bridge
