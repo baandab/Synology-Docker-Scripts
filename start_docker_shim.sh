@@ -29,9 +29,9 @@ echo "Creating macvlan1 and network shim..."
 
 #create network shim - see https://blog.oddbit.com/post/2018-03-12-using-docker-macvlan-networks/
 #
-# this creates a subnet (192.168.0.40 to 192.168.0.48) that we can connect to via 192.168.0.49
+# this creates a subnet (192.168.0.40 to 192.168.0.48) that we can connect to via 192.168.0.48
 #
-# 192.168.0.49/32 is one address: 192.168.0.49
+# 192.168.0.48/32 is one address: 192.168.0.48
 # 192.168.0.40/29 is a range 192.168.0.40 to 192.168.0.48
 # 192.168.0.0/24 is a range 192.168.0.40 to 192.168.0.255
 #  
@@ -43,7 +43,7 @@ echo "Creating macvlan1 and network shim..."
 sleep 5
 
 # add host to shim
-/sbin/ip address add 192.168.0.49/32 dev mynet-shim
+/sbin/ip address add 192.168.0.48/32 dev mynet-shim
 
 sleep 5
 

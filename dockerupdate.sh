@@ -49,10 +49,10 @@ echo
 
 #create network shim - see https://blog.oddbit.com/post/2018-03-12-using-docker-macvlan-networks/
 #
-# this creates a subnet (192.168.0.40 to 192.168.0.48) that we can connect to via 192.168.0.49
+# this creates a subnet (192.168.0.40 to 192.168.0.48) that we can connect to via 192.168.0.48
 #
 # 192.168.0.24 is the IP address Synology host
-# 192.168.0.49/32 is one address: 192.168.0.49
+# 192.168.0.48/32 is one address: 192.168.0.48
 # 192.168.0.40/29 is a range 192.168.0.40 to 192.168.0.48
 # 192.168.0.0/24 is a range 192.168.0.40 to 192.168.0.255. 
 #  
@@ -62,14 +62,14 @@ echo
   --subnet 192.168.0.0/24 \
   --gateway 192.168.0.1 \
   --ip-range 192.168.0.40/29 \
-  --aux-address 'host=192.168.0.49' \
+  --aux-address 'host=192.168.0.48' \
   macvlan1
   
 # create shim 
 /sbin/ip link add mynet-shim link eth0 type macvlan  mode bridge
 
 # add host to shim
-/sbin/ip address add 192.168.0.49/32 dev mynet-shim
+/sbin/ip address add 192.168.0.48/32 dev mynet-shim
 
 # activate the shim
 /sbin/ip link set mynet-shim up
