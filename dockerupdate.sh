@@ -56,6 +56,7 @@ echo
 # 192.168.0.40/29 is a range 192.168.0.40 to 192.168.0.48
 # 192.168.0.0/24 is a range 192.168.0.40 to 192.168.0.255. 
 #  
+# change eth0 to ovs_eth0 if you have Synology Virtual Machine manager installed - thanks aurrak!
 
 /usr/local/bin/docker network create -d macvlan -o parent=eth0 \
   --subnet 192.168.0.0/24 \
