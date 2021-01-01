@@ -2,10 +2,10 @@
 
 d=`date "+%Y-%m-%d - %H:%M:%S"`
 echo "Date: $d"
-echo 
+echo
 echo "Starting docker container updates..."
 echo "-----------------------------------"
-echo 
+echo
 
 
 TIMEOUT=360
@@ -13,25 +13,25 @@ SLEEP=60
 
 
 echo "Update containers: docker-compose pull" 
-echo 
+echo
 /usr/local/bin/docker-compose --no-ansi pull
 echo "-----------------------------------"
 echo "Update complete..."
 
 sleep $SLEEP
 
-echo 
+echo
 echo "Take down and remove existing containers: docker-compose down" 
-echo 
+echo
 COMPOSE_HTTP_TIMEOUT=$TIMEOUT /usr/local/bin/docker-compose --no-ansi down
 echo "-----------------------------------"
 echo "Containers removed..."
 
 sleep $SLEEP
 
-echo 
+echo
 echo "Pruning networks and removing network shim" 
-echo 
+echo
 
 # remove network shim
 /sbin/ip link set mynet-shim down
@@ -43,20 +43,19 @@ echo "Networks pruned and shim removed..."
 
 sleep $SLEEP
 
-echo 
+echo
 echo "Creating macvlan1 and network shim" 
-echo 
+echo
 
 #create network shim - see https://blog.oddbit.com/post/2018-03-12-using-docker-macvlan-networks/
 #
 # this creates a subnet (192.168.0.40 to 192.168.0.48) that we can connect to via 192.168.0.48
 #
-# 192.168.0.24 is the IP address Synology host
 # 192.168.0.48/32 is one address: 192.168.0.48
 # 192.168.0.40/29 is a range 192.168.0.40 to 192.168.0.48
-# 192.168.0.0/24 is a range 192.168.0.40 to 192.168.0.255. 
-#  
-# change eth0 to ovs_eth0 if you have Synology Virtual Machine manager installed - thanks aurrak!
+# 192.168.0.0/24  is a range 192.168.0.40 to 192.168.0.255. 
+# 
+# change eth0 to ovs_eth0 if you have Synology Virtual Machine Manager installed - thanks aurrak!
 
 /usr/local/bin/docker network create -d macvlan -o parent=eth0 \
   --subnet 192.168.0.0/24 \
@@ -64,9 +63,9 @@ echo
   --ip-range 192.168.0.40/29 \
   --aux-address 'host=192.168.0.48' \
   macvlan1
-  
+ 
 # create shim 
-/sbin/ip link add mynet-shim link eth0 type macvlan  mode bridge
+/sbin/ip link add mynet-shim link eth0 type macvlan mode bridge
 
 # add host to shim
 /sbin/ip address add 192.168.0.48/32 dev mynet-shim
@@ -76,14 +75,14 @@ echo
 
 # set route from host to shim to connect the networks
 /sbin/ip route add 192.168.0.40/29 dev mynet-shim
-  
+ 
 
 echo
-echo  
+echo
 
 echo "-----------------------------------"
 echo "macvlan1 and network shim created..."
-echo 
+echo
 echo "Showing link... "
 
 /sbin/ip link | grep "mynet-shim"
@@ -99,17 +98,17 @@ echo "Showing route..."
 /sbin/ip route | grep "mynet-shim"
 
 echo
-echo  
+echo
 
 sleep $SLEEP
 
-echo 
+echo
 echo "Bring the containers back up: docker-compose up -d" 
-echo 
+echo
 COMPOSE_HTTP_TIMEOUT=$TIMEOUT /usr/local/bin/docker-compose --no-ansi up -d
 echo "-----------------------------------"
 echo "Containers started..."
-echo 
+echo
 
 sleep $SLEEP
 

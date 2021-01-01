@@ -24,7 +24,7 @@ echo "Sleeping 15 seconds..."
 
 sleep 15
 
-echo 
+echo
 echo "Creating macvlan1 and network shim..." 
 
 #create network shim - see https://blog.oddbit.com/post/2018-03-12-using-docker-macvlan-networks/
@@ -33,12 +33,12 @@ echo "Creating macvlan1 and network shim..."
 #
 # 192.168.0.48/32 is one address: 192.168.0.48
 # 192.168.0.40/29 is a range 192.168.0.40 to 192.168.0.48
-# 192.168.0.0/24 is a range 192.168.0.40 to 192.168.0.255
-#  
+# 192.168.0.0/24  is a range 192.168.0.40 to 192.168.0.255
+# 
 # change eth0 to ovs_eth0 if you have Synology Virtual Machine manager installed - thanks aurrak!
-  
+
 # create shim 
-/sbin/ip link add mynet-shim link eth0 type macvlan  mode bridge
+/sbin/ip link add mynet-shim link eth0 type macvlan mode bridge
 
 sleep 5
 
@@ -57,7 +57,7 @@ sleep 5
 
 sleep 5
 
-echo 
+echo
 echo "Checking if network was created..."
 
 MATCH=`/sbin/ip link | grep -c "mynet-shim"`
@@ -66,23 +66,23 @@ if [ "$MATCH" == "1" ]
 then
 	echo
 	echo "Network created... "
-	echo 
+	echo
 	echo "Showing link... "
 	
 	/sbin/ip link | grep "mynet-shim"
 	
-	echo 
+	echo
 	echo "Showing address... "
 	
 	/sbin/ip address show mynet-shim
 	
-	echo 
+	echo
 	echo "Showing route..."
 	
 	/sbin/ip route | grep "mynet-shim"
 
-	echo 
-	echo 
+	echo
+	echo
 else
 	echo
 	echo "Error ... network does not exist..."
