@@ -5,7 +5,7 @@
  
 Used to update docker containers.  Run this via Task Scheduler on the cadence you prefer (weekly, monthly, etc).  Requires a docker-compose.yml in the same directory.  Update this script to change network parameters. 
 
-		shell /volume1/bin/dockerupdate.sh
+		bash /volume1/bin/dockerupdate.sh
  
  
 ## docker-compose.yml
@@ -18,7 +18,7 @@ This compose will create container for Grafana, Influxdb, and HomeBridge.   Upda
 This will startup the network shim when the Synology reboots.  Run this via Task Schedule as a "triggered" user-defined script to run at "Boot-up".  Update this script to change network parameters. 
  
  
-		shell /volume1/bin/start_docker_shim.sh
+		bash /volume1/bin/start_docker_shim.sh
 		
 		
 ## shell_container.sh
